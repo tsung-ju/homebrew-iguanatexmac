@@ -14,6 +14,7 @@ cask 'iguanatexmac' do
     target: '/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib'
 
   postflight do
+    # Taken from https://youpresent.co.uk/developing-installers-for-office-mac-2016-application-add-ins/
     out, err, status = Open3.capture3('osascript', :stdin_data=>%Q{
       tell application "Microsoft PowerPoint"
         set addIn to register add in "#{ENV['HOME']}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized/IguanaTexMac.ppam"
