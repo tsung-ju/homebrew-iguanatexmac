@@ -30,6 +30,8 @@ cask 'iguanatexmac' do
         if add ins is not missing value then
           repeat with addIn in (add ins as list)
             if name of addIn = "IguanaTexMac" then
+              set loaded of addIn to false
+              set auto load of addIn to false
               set registered of addIn to false
             end if
           end repeat
