@@ -8,8 +8,10 @@ cask 'iguanatexmac' do
 
   artifact "IguanaTex_v#{version.gsub(/[.-]/, '_')}/IguanaTexMac.ppam",
     target: "#{ENV['HOME']}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized/IguanaTexMac.ppam"
-  artifact "IguanaTex_v#{version.gsub(/[.-]/, '_')}/IguanaTex.scpt", target: "#{ENV['HOME']}/Library/Application Scripts/com.microsoft.Powerpoint/IguanaTex.scpt"
-  artifact "IguanaTex_v#{version.gsub(/[.-]/, '_')}/libIguanaTexHelper.dylib", target: '/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib'
+  artifact "IguanaTex_v#{version.gsub(/[.-]/, '_')}/IguanaTex.scpt",
+    target: "#{ENV['HOME']}/Library/Application Scripts/com.microsoft.Powerpoint/IguanaTex.scpt"
+  artifact "IguanaTex_v#{version.gsub(/[.-]/, '_')}/libIguanaTexHelper.dylib",
+    target: '/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib'
 
   postflight do
     out, err, status = Open3.capture3('osascript', :stdin_data=>%Q{
