@@ -1,6 +1,6 @@
 cask 'iguanatexmac' do
   version '1.56-mac.3'
-  sha256 '3cc24cac0a11f0e49d5411b02c461859a5befe9f01e96ae3a3329f2b96b7bb8e'
+  sha256 '8a2ab4f1fb7c0af59015be02013138d8f4157dfe1de424ba182c593f8822f5a2'
 
   url "https://github.com/ray851107/IguanaTexMac/releases/download/#{version}/IguanaTex_v#{version.gsub(/[.-]/, '_')}.zip"
   name 'IguanaTexMac'
