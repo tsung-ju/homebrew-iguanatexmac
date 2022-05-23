@@ -1,23 +1,23 @@
 cask 'iguanatexmac' do
-  version '1.56-mac.3'
-  sha256 '8a2ab4f1fb7c0af59015be02013138d8f4157dfe1de424ba182c593f8822f5a2'
+  version '1.60'
+  sha256 '9ad8d8d3015085cb56ed289f07e5a8e7338ad19255addaa9271bbe4f7a8b2b2f'
 
-  url "https://github.com/ray851107/IguanaTexMac/releases/download/#{version}/IguanaTex_v#{version.gsub(/[.-]/, '_')}.zip"
+  url "https://github.com/Jonathan-LeRoux/IguanaTex/releases/download/v#{version}/IguanaTex_v#{version.gsub('.', '_')}.zip"
   name 'IguanaTexMac'
-  homepage 'https://github.com/ray851107/IguanaTexMac'
+  homepage 'https://github.com/Jonathan-LeRoux/IguanaTex'
 
-  artifact "IguanaTex_v#{version.gsub(/[.-]/, '_')}/IguanaTexMac.ppam",
-    target: "#{ENV['HOME']}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized/IguanaTexMac.ppam"
-  artifact "IguanaTex_v#{version.gsub(/[.-]/, '_')}/IguanaTex.scpt",
+  artifact "IguanaTex_v#{version.gsub('.', '_')}.ppam",
+    target: "#{ENV['HOME']}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized/IguanaTex_v#{version.gsub('.', '_')}.ppam"
+  artifact "IguanaTex.scpt",
     target: "#{ENV['HOME']}/Library/Application Scripts/com.microsoft.Powerpoint/IguanaTex.scpt"
-  artifact "IguanaTex_v#{version.gsub(/[.-]/, '_')}/libIguanaTexHelper.dylib",
+  artifact "libIguanaTexHelper.dylib",
     target: '/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib'
 
   postflight do
     # Taken from http://youpresent.co.uk/developing-installers-for-office-mac-2016-application-add-ins/
     out, err, status = Open3.capture3('osascript', :stdin_data=>%Q{
       tell application "Microsoft PowerPoint"
-        set addIn to register add in "#{ENV['HOME']}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized/IguanaTexMac.ppam"
+        set addIn to register add in "#{ENV['HOME']}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized/IguanaTex_v#{version.gsub('.', '_')}.ppam"
         set the auto load of addIn to true
         set the loaded of addIn to true
       end tell
@@ -30,7 +30,7 @@ cask 'iguanatexmac' do
       tell application "Microsoft PowerPoint"
         if add ins is not missing value then
           repeat with addIn in (add ins as list)
-            if name of addIn = "IguanaTexMac" then
+            if name of addIn = "IguanaTex_v#{version.gsub('.', '_')}" then
               set loaded of addIn to false
               set auto load of addIn to false
               set registered of addIn to false
