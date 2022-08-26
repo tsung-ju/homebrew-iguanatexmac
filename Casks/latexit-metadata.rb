@@ -1,5 +1,5 @@
 cask 'latexit-metadata' do
-  version '1.60'
+  version '1.60.2'
   sha256 '42e23e9ef173de1c716e22a4c842e0a903d543db8b0624d963105e952339d31d'
 
   url "https://github.com/Jonathan-LeRoux/IguanaTex/releases/download/v#{version}/LaTeXiT-metadata-macos"
