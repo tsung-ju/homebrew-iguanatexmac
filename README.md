@@ -8,10 +8,11 @@ brew tap tsung-ju/iguanatexmac
 brew install --cask --no-quarantine iguanatexmac latexit-metadata
 ```
 
-To upgrade:
+To upgrade, close PowerPoint, then run:
 ```sh
 brew upgrade --cask --no-quarantine iguanatexmac latexit-metadata
 ```
+Check in PowerPoint > Tools > PowerPoint Add-ins that the previous version has been fully removed. If it is still there but disabled, remove it using "-".
 
 To uninstall:
 ```sh
