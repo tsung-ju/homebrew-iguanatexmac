@@ -8,10 +8,13 @@ brew tap tsung-ju/iguanatexmac
 brew install --cask --no-quarantine iguanatexmac latexit-metadata
 ```
 
-To upgrade:
+To upgrade, close PowerPoint, then run:
 ```sh
+brew update
 brew upgrade --cask --no-quarantine iguanatexmac latexit-metadata
 ```
+Put your password in if prompted. If PowerPoint starts and shows an error message, click Ok.   
+If PowerPoint did start, restart it for changes to take effect. 
 
 To uninstall:
 ```sh
