@@ -6,7 +6,8 @@ cask 'iguanatexmac' do
   name 'IguanaTexMac'
   homepage 'https://github.com/Jonathan-LeRoux/IguanaTex'
 
-  ppam_name = "IguanaTex_v#{version.gsub('.', '_')}.ppam"
+  addin_name = "IguanaTex_v#{version.gsub('.', '_')}"
+  ppam_name = "#{addin_name}.ppam"
   ppam_dir = "#{ENV['HOME']}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized"
 
   artifact ppam_name,
@@ -33,7 +34,7 @@ cask 'iguanatexmac' do
       tell application "Microsoft PowerPoint"
         if add ins is not missing value then
           repeat with addIn in (add ins as list)
-            if name of addIn = "#{ppam_name}" then
+            if name of addIn = "#{addin_name}" or name of addIn = "#{ppam_name}" then
               set loaded of addIn to false
               set auto load of addIn to false
               set registered of addIn to false
