@@ -14,8 +14,7 @@ brew update
 brew upgrade --cask --no-quarantine iguanatexmac latexit-metadata
 ```
 Put your password in if prompted. If PowerPoint starts and shows an error message, click Ok.   
-If PowerPoint started, restart it for changes to take effect. An error message will likely appear complaining that the previous version's `.ppam` file cannot be found, click Ok.   
-In PowerPoint > Tools > PowerPoint Add-ins, if the previous version still appears (it should be disabled), remove it using the "-" button.
+If PowerPoint did start, restart it for changes to take effect. 
 
 To uninstall:
 ```sh
