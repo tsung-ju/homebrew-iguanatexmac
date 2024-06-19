@@ -13,8 +13,9 @@ To upgrade, close PowerPoint, then run:
 brew update
 brew upgrade --cask --no-quarantine iguanatexmac latexit-metadata
 ```
-Put your password in if prompted. If PowerPoint starts and shows an error message, click Ok.   
-If PowerPoint did start, restart it for changes to take effect. 
+Put your password in if prompted.
+If PowerPoint starts and shows an error message complaining that the previous version's `.ppam` file cannot be found,
+click Ok and go to `PowerPoint > Tools > PowerPoint Add-ins`, remove the previous version using the "-" button.
 
 To uninstall:
 ```sh
