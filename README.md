@@ -7,6 +7,8 @@ To install:
 brew tap tsung-ju/iguanatexmac
 brew install --cask --no-quarantine iguanatexmac latexit-metadata
 ```
+Note for 10.13 (High Sierra) users:
+IguanaTex requires the [Swift 5 Runtime Support](https://support.apple.com/en-us/106446) to function properly on macOS 10.13 (it's included by default on macOS 10.14 and above). Please follow the link to download and install it manually
 
 To upgrade, close PowerPoint, then run:
 ```sh
