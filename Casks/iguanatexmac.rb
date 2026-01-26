@@ -17,6 +17,10 @@ cask "iguanatexmac" do
   artifact "libIguanaTexHelper.dylib",
            target: "/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib"
 
+  preflight do
+    system_command "xattr", args: ["-d", "com.apple.quarantine", "#{staged_path}/libIguanaTexHelper.dylib"]
+  end
+
   postflight do
     # Taken from http://youpresent.co.uk/developing-installers-for-office-mac-2016-application-add-ins/
     _, err, status = Open3.capture3("osascript", stdin_data: %Q(
