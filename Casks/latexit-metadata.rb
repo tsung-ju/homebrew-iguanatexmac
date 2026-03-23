@@ -10,7 +10,7 @@ cask "latexit-metadata" do
            target: "/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/LaTeXiT-metadata-macos"
 
   preflight do
-    system_command "xattr", args: ["-d", "com.apple.quarantine", "#{staged_path}/LaTeXiT-metadata-macos"]
+    system_command "xattr", args: ["-d", "com.apple.quarantine", "#{staged_path}/LaTeXiT-metadata-macos"], must_succeed: false
     set_permissions "#{staged_path}/LaTeXiT-metadata-macos", "0755"
   end
 end

@@ -18,7 +18,7 @@ cask "iguanatexmac" do
            target: "/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib"
 
   preflight do
-    system_command "xattr", args: ["-d", "com.apple.quarantine", "#{staged_path}/libIguanaTexHelper.dylib"]
+    system_command "xattr", args: ["-d", "com.apple.quarantine", "#{staged_path}/libIguanaTexHelper.dylib"], must_succeed: false
   end
 
   postflight do
