@@ -13,7 +13,7 @@ cask "iguanatexmac" do
   generated_script "installer.sh", content: <<~SH
     #!/bin/sh
     mkdir -p "#{ppam_dir}"
-    cp "#{staged_path}/#{ppam_name}" "#{ppam_dir}"
+    cp "#{staged_path}/#{ppam_name}" "#{ppam_dir}/#{ppam_name}"
 
     # Taken from http://youpresent.co.uk/developing-installers-for-office-mac-2016-application-add-ins/
     osascript << EOF
@@ -26,6 +26,7 @@ cask "iguanatexmac" do
   SH
   generated_script "uninstall.sh", content: <<~SH
     #!/bin/sh
+    rm "#{ppam_dir}/#{ppam_name}"
     osascript << EOF
       tell application "Microsoft PowerPoint"
         if add ins is not missing value then
@@ -39,7 +40,6 @@ cask "iguanatexmac" do
         end if
       end tell
     EOF
-
     echo "Restart PowerPoint for the changes to take effect"
   SH
   installer script: "installer.sh"
