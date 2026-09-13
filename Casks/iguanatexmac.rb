@@ -10,20 +10,10 @@ cask "iguanatexmac" do
   ppam_name = "#{addin_name}.ppam"
   ppam_dir = "#{Dir.home}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized"
 
-  artifact "IguanaTex.scpt",
-           target: "#{Dir.home}/Library/Application Scripts/com.microsoft.Powerpoint/IguanaTex.scpt"
-  artifact "libIguanaTexHelper.dylib",
-           target: "/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib"
-
-  preflight_steps do
-    run "xattr", args: ["-d", "com.apple.quarantine", "{{staged_path}}/libIguanaTexHelper.dylib"], must_succeed: false
-    copy "#{ppam_name}", "#{ppam_dir}/#{ppam_name}"
-  end
-
   # Taken from http://youpresent.co.uk/developing-installers-for-office-mac-2016-application-add-ins/
   installer script: {
     executable: "osascript",
-    input: <<~SCRIPT,
+    input:      <<~SCRIPT,
       tell application "Microsoft PowerPoint"
         set addIn to register add in "#{ppam_dir}/#{ppam_name}"
         set the auto load of addIn to true
@@ -31,10 +21,24 @@ cask "iguanatexmac" do
       end tell
     SCRIPT
   }
+  artifact "IguanaTex.scpt",
+           target: "#{Dir.home}/Library/Application Scripts/com.microsoft.Powerpoint/IguanaTex.scpt"
+  artifact "libIguanaTexHelper.dylib",
+           target: "/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib"
+
+  preflight_steps do
+    run "xattr", args: ["-d", "com.apple.quarantine", "{{staged_path}}/libIguanaTexHelper.dylib"], must_succeed: false
+    copy ppam_name.to_s, "#{ppam_dir}/#{ppam_name}"
+  end
+
+  uninstall_postflight_steps do
+    remove "#{ppam_dir}/#{ppam_name}"
+    run "echo", args: ["Restart PowerPoint for the changes to take effect"]
+  end
 
   uninstall script: {
-    executable: "osascript",
-    input: <<~SCRIPT,
+    executable:   "osascript",
+    input:        <<~SCRIPT,
       tell application "Microsoft PowerPoint"
         if add ins is not missing value then
           repeat with addIn in (add ins as list)
@@ -47,11 +51,6 @@ cask "iguanatexmac" do
         end if
       end tell
     SCRIPT
-    must_succeed: false
+    must_succeed: false,
   }
-
-  uninstall_postflight_steps do
-    remove "#{ppam_dir}/#{ppam_name}"
-    run "echo", args: ["Restart PowerPoint for the changes to take effect"]
-  end
 end
