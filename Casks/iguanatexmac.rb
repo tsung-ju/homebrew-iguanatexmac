@@ -10,31 +10,31 @@ cask "iguanatexmac" do
   ppam_name = "#{addin_name}.ppam"
   ppam_dir = "#{Dir.home}/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Add-Ins.localized"
 
-  artifact ppam_name,
-           target: "#{ppam_dir}/#{ppam_name}"
   artifact "IguanaTex.scpt",
            target: "#{Dir.home}/Library/Application Scripts/com.microsoft.Powerpoint/IguanaTex.scpt"
   artifact "libIguanaTexHelper.dylib",
            target: "/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/libIguanaTexHelper.dylib"
 
-  preflight do
-    system_command "xattr", args: ["-d", "com.apple.quarantine", "#{staged_path}/libIguanaTexHelper.dylib"], must_succeed: false
+  preflight_steps do
+    run "xattr", args: ["-d", "com.apple.quarantine", "{{staged_path}}/libIguanaTexHelper.dylib"], must_succeed: false
+    copy "#{ppam_name}", "#{ppam_dir}/#{ppam_name}"
   end
 
-  postflight do
-    # Taken from http://youpresent.co.uk/developing-installers-for-office-mac-2016-application-add-ins/
-    _, err, status = Open3.capture3("osascript", stdin_data: %Q(
+  # Taken from http://youpresent.co.uk/developing-installers-for-office-mac-2016-application-add-ins/
+  installer script: {
+    executable: "osascript",
+    input: <<~SCRIPT,
       tell application "Microsoft PowerPoint"
         set addIn to register add in "#{ppam_dir}/#{ppam_name}"
         set the auto load of addIn to true
         set the loaded of addIn to true
       end tell
-    ))
-    raise err unless status.success?
-  end
+    SCRIPT
+  }
 
-  uninstall_preflight do
-    _, err, status = Open3.capture3("osascript", stdin_data: %Q{
+  uninstall script: {
+    executable: "osascript",
+    input: <<~SCRIPT,
       tell application "Microsoft PowerPoint"
         if add ins is not missing value then
           repeat with addIn in (add ins as list)
@@ -46,11 +46,12 @@ cask "iguanatexmac" do
           end repeat
         end if
       end tell
-    })
-    $stderr.puts err unless status.success?
-  end
+    SCRIPT
+    must_succeed: false
+  }
 
-  uninstall_postflight do
-    puts "Restart PowerPoint for the changes to take effect"
+  uninstall_postflight_steps do
+    remove "#{ppam_dir}/#{ppam_name}"
+    run "echo", args: ["Restart PowerPoint for the changes to take effect"]
   end
 end

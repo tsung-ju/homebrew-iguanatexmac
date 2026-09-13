@@ -9,8 +9,8 @@ cask "latexit-metadata" do
   artifact "LaTeXiT-metadata-macos",
            target: "/Library/Application Support/Microsoft/Office365/User Content.localized/Add-Ins.localized/LaTeXiT-metadata-macos"
 
-  preflight do
-    system_command "xattr", args: ["-d", "com.apple.quarantine", "#{staged_path}/LaTeXiT-metadata-macos"], must_succeed: false
-    set_permissions "#{staged_path}/LaTeXiT-metadata-macos", "0755"
+  preflight_steps do
+    run "xattr", args: ["-d", "com.apple.quarantine", "{{staged_path}}/LaTeXiT-metadata-macos"], must_succeed: false
+    set_permissions "{{staged_path}}/LaTeXiT-metadata-macos", "0755"
   end
 end
